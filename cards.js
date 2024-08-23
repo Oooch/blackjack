@@ -12,11 +12,7 @@ class Deck {
         this.values = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
         
         if (emptyDeck == false) {
-            for (let suit of this.suits) {
-                for (let value of this.values) {
-                    this.cards.push(new Card(suit, value));
-                }
-            }
+            this.addCards();
             this.shuffleCards();
         }
     }
@@ -32,7 +28,15 @@ class Deck {
     
     takeCard() {
         return this.cards.pop();
-    }    
+    }
+
+    addCards() {
+        for (let suit of this.suits) {
+            for (let value of this.values) {
+                this.cards.push(new Card(suit, value));
+            }
+        }
+    }
 }
 
 function cardValue(card, total) {

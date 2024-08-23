@@ -5,8 +5,24 @@
     margin: auto;
     border-radius: 10px;
     text-align: center;
+    position: relative; 
 }
 
 #title {
-    display:inline;
+    display: inline-block; /* Center the title within #main */
+    margin: 0;
+    position: relative;
+    top: 6%; /* Vertically center */
+    transform: translateY(-50%);
+}
+
+#left-corner {
+    position: absolute;
+    left: 10px;
+    text-align: left;
+    margin-top: 0%;
+}
+
+#card_images {
+    display: inline;
 }

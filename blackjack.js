@@ -8,12 +8,13 @@ function updateElement(id, text) {
 }
 
 function clearElement(id) {
-    document.getElementById(id).textContent = ""
+    document.getElementById(id).textContent = "";
 }
 
 function hit() {
     if (total == 0) {
         clearElement("cards");
+        document.getElementById("card_images").innerHTML = "";
     }
 
     let card = deck.takeCard();
@@ -21,14 +22,16 @@ function hit() {
     total += cardValue(card, total);
     clearElement("sum");
 
-    let cardsElement = document.getElementById("cards")
+    let cardsElement = document.getElementById("cards");
 
     if (cardsElement.textContent == "") {
-        cardsElement.textContent += card.value + " of " + card.suit;    
+        cardsElement.textContent = card.value + " of " + card.suit;    
     } else {
         cardsElement.textContent += " + " + card.value + " of " + card.suit;
     }
     
+    addCardImage(card);
+
     if (total > 21){
         updateElement("status","Bust!");
         total = 0;
@@ -40,6 +43,33 @@ function hit() {
     } else {
         updateElement("status","Now at " + total);        
     }
+}
+
+function addCardImage(card) {
+    let suit = card.suit.toLowerCase();
+    let value = "";
+
+    switch(card.value) {
+        case "J":
+            value = "jack";
+            break;
+        case "Q":
+            value = "queen";
+            break;
+        case "K":
+            value = "king";
+            break;
+        case "A":
+            value = "ace";
+            break;
+        default: // so it's a number
+            value = card.value;
+            break;
+    }
+
+    let img = document.createElement("img");
+    img.src = "Images/Cards/" + value + "_of_" + suit + ".svg";
+    document.getElementById("card_images").appendChild(img);
 }
 
 function stand() {
