@@ -69,6 +69,7 @@ function addCardImage(card) {
 
     let img = document.createElement("img");
     img.src = "Images/Cards/" + value + "_of_" + suit + ".svg";
+    img.style.margin = "5px";
     document.getElementById("card_images").appendChild(img);
 }
 
