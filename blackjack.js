@@ -13,27 +13,16 @@ function clearElement(id) {
 
 function hit() {
     if (playerTotal == 0) {
-        clearElement("cards");
         document.getElementById("player_card_images").innerHTML = "";
+        document.getElementById("house_card_images").innerHTML = "";
+        updateElement("player_sum", playerTotal)
     }
 
     let bet_amount = document.getElementById("bet_amount").value;
 
-    let card = deck.takeCard();
-
-    playerTotal += cardValue(card, playerTotal);
-    clearElement("sum");
-
-    let cardsElement = document.getElementById("cards");
-
-    if (cardsElement.textContent == "") {
-        cardsElement.textContent = card.value + " of " + card.suit;    
-    } else {
-        cardsElement.textContent += " + " + card.value + " of " + card.suit;
-    }
+    playerTakesCard();
     
-    addCardImage(card, true);
-    addCardImage(card, false);
+    houseTakesCard();
 
     if (playerTotal > 21){
         updateElement("status","Bust!");
@@ -46,6 +35,36 @@ function hit() {
     } else {
         updateElement("status","Now at " + playerTotal);        
     }
+}
+
+function playerTakesCard() {
+    let playerCard = deck.takeCard();
+
+    playerTotal += cardValue(playerCard, playerTotal);
+    
+    updateElement("player_sum","Player Total: " + playerTotal)
+    addCardImage(playerCard, true);
+}
+
+function houseTakesCard() {
+    let houseCard = deck.takeCard();
+
+    houseTotal += cardValue(houseCard, houseTotal);
+
+    updateElement("house_sum","House Total: " + houseTotal)
+    addCardImage(houseCard, false);
+}
+
+function stand() {
+    if (playerTotal > 21){
+        updateElement("status","Bust!");
+    } else if (playerTotal == 21) {
+        updateElement("status","You got a Blackjack!");
+    } else if (playerTotal < 21) {
+        updateElement("status","You're out of the game!");
+    }
+
+    playerTotal = 0;
 }
 
 function addCardImage(card, playerCard) {
@@ -81,20 +100,7 @@ function addCardImage(card, playerCard) {
     let img = document.createElement("img");
     img.src = "Images/Cards/" + value + "_of_" + suit + ".svg";
     img.style.margin = "5px";
-    document.getElementById("player_card_images").appendChild(img);
-}
-
-function stand() {
-    if (playerTotal > 21){
-        updateElement("status","Bust!");
-    } else if (playerTotal == 21) {
-        updateElement("status","You got a Blackjack!");
-    } else if (playerTotal < 21) {
-        updateElement("status","You're out of the game!");
-    }
-
-    playerTotal = 0;
-    clearElement("cards");
+    document.getElementById(elementID).appendChild(img);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
