@@ -69,26 +69,7 @@ function stand() {
 
 function addCardImage(card, playerCard) {
     let suit = card.suit.toLowerCase();
-    let value = "";
-
-    switch(card.value) {
-        case "J":
-            value = "jack";
-            break;
-        case "Q":
-            value = "queen";
-            break;
-        case "K":
-            value = "king";
-            break;
-        case "A":
-            value = "ace";
-            break;
-        default: // so it's a number
-            value = card.value;
-            break;
-    }
-
+    let value = card.value;
     let elementID = ""
 
     if (playerCard) {

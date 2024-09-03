@@ -9,7 +9,7 @@ class Deck {
     constructor(emptyDeck) {
         this.cards = [];
         this.suits = ["Clubs","Spades","Hearts","Diamonds"];
-        this.values = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
+        this.values = ["2","3","4","5","6","7","8","9","10","jack","queen","king","ace"];
         
         if (emptyDeck == false) {
             this.addCards();
@@ -41,11 +41,11 @@ class Deck {
 
 function cardValue(card, total) {
     if (isNaN(card.value)) {
-        if (card.value == "J" ||
-            card.value == "Q" ||
-            card.value == "K"){
+        if (card.value == "jack" ||
+            card.value == "queen" ||
+            card.value == "king"){
                 return 10;
-        } else if (card.value == "A"){
+        } else if (card.value == "ace"){
             if (total > 10) {
                 return 1;
             } else {
