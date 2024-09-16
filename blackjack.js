@@ -34,22 +34,32 @@ function hit() {
         houseTakesCard();
     }
 
+    endGameCheck();
+}
+
+function endGameCheck() {
     if (playerTotal > 21 && houseTotal > 21) {
         reset("Bust!");
+        return false;
     } else if (playerTotal == 21 && houseTotal == 21) {
         reset("Draw!");
+        return false;
     } else if (playerTotal > 21){
         reset("Bust!");
+        return false;
     } else if (playerTotal == 21) {
         reset("You got a Blackjack!");
 
-        increaseMoney(bet_amount * 3);        
+        increaseMoney(bet_amount * 3);      
+        return false;  
     } else if (houseTotal > 21) {
         reset("You win!");
 
         increaseMoney(bet_amount);  
+        return false;
     } else {
         updateElement("player_status","Now at " + playerTotal);        
+        return true;
     }
 }
 
@@ -79,14 +89,19 @@ function houseTakesCard() {
 }
 
 function stand() {
-    if (playerTotal > 21){
-        updateElement("player_status","Bust!");
-    } else if (playerTotal == 21) {
-        updateElement("player_status","You got a Blackjack!");
-    } else if (playerTotal < 21) {
-        updateElement("player_status","You're out of the game!");
+    document.getElementById("hit_button").disabled = true;
+    document.getElementById("stand_button").disabled = true;
+
+    let houseInPlay = true;
+
+    while (houseInPlay) {
+        houseTakesCard();
+        
+        houseInPlay = endGameCheck();
     }
 
+    document.getElementById("hit_button").disabled = false;
+    document.getElementById("stand_button").disabled = false;
     playerTotal = 0;
 }
 
